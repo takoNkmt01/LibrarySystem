@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"></meta>
+</head>
+<body>
+    <div th:fragment="bookDetail_contents">
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="page-header">
+                    <h1>ユーザー詳細</h1>
+                </div>
+                <form method="post" th:action="@{/bookDetail}" th:object="${bookRegistForm}">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <!-- ISBN番号（入力不可） -->
+                            <th class="active col-sm-2">ISBN番号</th>
+                            <td class="col-sm-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" th:field="*{isbn}" readonly="readonly" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--書籍名-->
+                            <th class="active">書籍名</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('bookName')} ? 'has-error'">
+                                    <input type="text" class="form-control" th:field="*{bookName}" />
+                                    <span class="text-danger" th:if="${#fields.hasErrors('bookName')}"
+                                    						th:errors="*{bookName}">bookName error</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--著者名-->
+                            <th class="active">著者名</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('bookAuthor')} ? 'has-error'">
+                                    <input type="text" class="form-control" th:field="*{bookAuthor}" />
+                                    <span class="text-danger" th:if="${#fields.hasErrors('bookAuthor')}"
+                                    						th:errors="*{bookAuthor}">bookAuthor error</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--出版社名-->
+                            <th class="active">出版社名</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('publisherName')} ? 'has-error'">
+                                    <input type="text" class="form-control" th:field="*{publisherName}" />
+                                    <span class="text-danger" th:if="${#fields.hasErrors('publisherName')}"
+                                    						th:errors="*{publisherName}">publisherName error</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--登録冊数-->
+                            <th class="active">登録冊数</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('bookRetention')} ? 'has-error'">
+                                    <input type="text" class="form-control" th:field="*{bookRetention}" />
+                                    <span class="text-danger" th:if="${#fields.hasErrors('bookRetention')}"
+                                    						th:errors="*{bookRetention}">bookRetention error</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--備考-->
+                            <th class="active">備考(理由など)</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('remarks')} ? 'has-error'">
+                                    <textarea rows="4" cols="20" class="form-control" th:field="*{remarks}"></textarea>
+                                    <span class="text-danger" th:if="${#fields.hasErrors('remarks')}"
+                                    						th:errors="*{remarks}">remarks error</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- 更新ボタン -->
+                    <button class="btn btn-primary btn-lg pull-right" type="submit" name="update" onclick="return confirm('下記入力内容で更新しますか？')">更新</button>
+                    <!-- 削除ボタン -->
+                    <button class="btn btn-danger btn-lg" type="submit" name="delete" onclick="return confirm('このユーザーを削除しますか？')">削除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

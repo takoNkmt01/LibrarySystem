@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"></meta>
+</head>
+<body>
+    <div th:fragment="borrowConfirm_contents">
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="page-header">
+                    <h1>確認</h1>
+                </div>
+                <p>下記の書籍を借りますか?</p>
+                <form method="post" th:action="@{/borrowDecide}" th:object="${book}">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <!-- ISBN番号（入力不可） -->
+                            <th class="active col-sm-2">ISBN番号</th>
+                            <td class="col-sm-3">
+                                <div class="form-group">
+                                    <span th:text="*{isbn}"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--書籍名-->
+                            <th class="active">書籍名</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('bookName')} ? 'has-error'">
+                                    <span th:text="*{bookName}"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--著者名-->
+                            <th class="active">著者名</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('bookAuthor')} ? 'has-error'">
+                                    <span th:text="*{bookAuthor}"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--出版社名-->
+                            <th class="active">出版社名</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('publisherName')} ? 'has-error'">
+                                    <span th:text="*{publisherName}"></span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--登録冊数-->
+                            <th class="active">登録冊数</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('bookRetention')} ? 'has-error'">
+                                    <span th:text="*{bookRetention}"></span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <input type="hidden" name="isbn" id="isbn" th:value="*{isbn}"/>
+                    <!-- 借りるボタン -->
+                    <button class="btn btn-primary btn-lg pull-right" type="submit" name="borrow">借りる</button>
+                    <!-- キャンセルボタン -->
+                    <button class="btn btn-danger btn-lg" type="submit" name="cancel">キャンセル</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

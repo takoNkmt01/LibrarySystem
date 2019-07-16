@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"></meta>
+</head>
+<body>
+    <div th:fragment="userDetail_contents">
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="page-header">
+                    <h1>ユーザー詳細</h1>
+                </div>
+                <form method="post" th:action="@{/userDetail}" th:object="${signupForm}">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <!-- ユーザーID（入力不可） -->
+                            <th class="active col-sm-2">ユーザID</th>
+                            <td class="col-sm-3">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" th:field="*{memberId}" readonly="readonly" />
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!-- 氏名-->
+                            <th class="active">氏名</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('memberName')} ? 'has-error'">
+                                    <input type="text" class="form-control" th:field="*{memberName}" />
+                                    <span class="text-danger" th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}">memberName error</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--住所-->
+                            <th class="active">住所</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('address')} ? 'has-error'">
+                                    <input type="text" class="form-control" th:field="*{address}" />
+                                    <span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">address error</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--電話番号-->
+                            <th class="active">電話番号</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('telNumber')} ? 'has-error'">
+                                    <input type="text" class="form-control" th:field="*{telNumber}" />
+                                    <span class="text-danger" th:if="${#fields.hasErrors('telNumber')}" th:errors="*{telNumber}">telNumber error</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--メールアドレス-->
+                            <th class="active">メールアドレス</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('mailAddress')} ? 'has-error'">
+                                    <input type="text" class="form-control" th:field="*{mailAddress}" />
+                                    <span class="text-danger" th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}">mailAddress error</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <!--備考-->
+                            <th class="active">備考欄(理由など)</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('remarks')} ? 'has-error'">
+                                    <textarea rows="4" cols="20" class="form-control" th:field="*{remarks}"></textarea>
+                                    <span class="text-danger" th:if="${#fields.hasErrors('remarks')}" th:errors="*{remarks}">remarks error</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- 更新ボタン -->
+                    <button class="btn btn-primary btn-lg pull-right" type="submit" name="update" onclick="return confirm('下記入力内容で更新しますか？')">更新</button>
+                    <!-- 削除ボタン -->
+                    <button class="btn btn-danger btn-lg" type="submit" name="delete" onclick="return confirm('このユーザーを強制的に抹殺してもよろしいでしょうか？')">削除</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

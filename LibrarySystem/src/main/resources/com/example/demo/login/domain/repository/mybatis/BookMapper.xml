@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- クラス指定 -->
+<mapper
+namespace="com.example.demo.login.domain.repository.mybatis.BookMapper">
+	<resultMap type="com.example.demo.login.domain.model.Book" id="book">
+		<id column="isbn" property="isbn"/>
+		<result column="book_name" property="bookName"/>
+		<result column="book_author" property="bookAuthor"/>
+		<result column="publisher_id" property="publisherId"/>
+		<result column="book_retention" property="bookRetention"/>
+		<result column="create_date" property="createDate"/>
+		<result column="delete_date" property="deleteDate"/>
+		<result column="publisher_name" property="publisherName"/>
+		<result column="lending_book" property="lendingBook"/>
+		<result column="remarks" property="remarks"/>
+	</resultMap>
+	<!-- 出版社名検索 -->
+	<select id="searchPublisher" parameterType="string" resultType="Integer">
+		select count(*) from publisher where publisher_name = #{publisherName}
+	</select>
+	<!-- 出版社名を登録 -->
+	<insert id="insertPublisher" parameterType="string">
+		insert into publisher(publisher_name) values(#{publisherName})
+	</insert>
+	<!-- 出版社名から出版社IDを取得する -->
+	<select id="getPublisherId" parameterType="string" resultType="Integer">
+		select publisher_id from publisher where publisher_name = #{publisherName}
+	</select>
+	<!-- 書籍一件登録 -->
+	<insert id="insertBook">
+		<selectKey keyProperty="id" resultType="string" order="BEFORE">
+			select nextval('book_sequence', 'BS')
+		</selectKey>
+		insert into book(
+			isbn,
+			book_name,
+			book_author,
+			publisher_id,
+			book_retention,
+			create_date
+		) values(
+			#{id},
+			#{param1.bookName},
+			#{param1.bookAuthor},
+			#{param2},
+			#{param1.bookRetention},
+			#{param3}
+		)
+	</insert>
+
+	<!-- 一件取得 -->
+	<select id="selectOneBook" parameterType="string" resultMap="book">
+		select
+			b.isbn as isbn,
+			b.book_name as book_name,
+			b.book_author as book_author,
+			p.publisher_name as publisher_name,
+			b.book_retention as book_retention,
+			b.create_date as create_date,
+			b.delete_date as delete_date
+		from book as b
+		left outer join publisher as p
+		on b.publisher_id = p.publisher_id
+		where isbn = #{isbn}
+	</select>
+
+	<!-- 書籍件数 -->
+	<select id="count" resultType="Integer">
+		select count(*) from book where delete_date is null
+	</select>
+
+	<!-- 書籍全件取得 -->
+	<select id="selectAllBook" resultMap="book">
+		select
+			b.isbn as isbn,
+			b.book_author as book_author,
+			b.book_name as book_name,
+			p.publisher_name as publisher_name,
+			b.book_retention as book_retention,
+			coalesce(c.lending_book, 0) as lending_book
+		from
+			book as b
+		left outer join
+			publisher as p
+		on
+			p.publisher_id = b.publisher_id
+		left outer join
+		 	(select
+		 		isbn,
+		 		count(isbn) as lending_book,
+		 		borrowing_date
+		 	 from lending_and_borrowing
+		 	 where
+		 	 	borrowing_date is null
+		 	 group by
+		 	 	isbn) as c
+		 on
+		 	b.isbn = c.isbn
+		 where
+		 	b.delete_date is null
+		 limit #{divNum}, 6
+	</select>
+	<!-- 一件更新 -->
+	<update id="updateOne">
+		update book set
+			book_name = #{param1.bookName},
+			book_author = #{param1.bookAuthor},
+			publisher_id = #{param2},
+			book_retention = #{param1.bookRetention},
+			update_date = #{param3},
+			remarks = #{param1.remarks}
+		where
+			isbn = #{param1.isbn}
+	</update>
+	<!-- 一件削除&強制返却 -->
+	<update id="deleteOne">
+		update book set
+			delete_date = #{param2}
+		where
+			isbn = #{param1.isbn}
+	</update>
+	<update id="changeLB">
+		update lending_and_borrowing set
+			borrowing_date = #{param2}
+		where
+			isbn = #{param1.isbn}
+	</update>
+</mapper>

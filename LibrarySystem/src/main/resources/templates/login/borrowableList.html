@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"></meta>
+</head>
+<body>
+    <!-- コンテンツ部分 -->
+    <div th:fragment="borrowableList_contents">
+        <div class="page-header">
+            <h1>書籍一覧</h1>
+            <p th:text="${error}" style="color : red;"></p>
+        </div>
+	        <table class="table table-bordered table-hover table-striped">
+	            <tr>
+	                <th class="info col-sm-2">ISBN番号</th>
+	                <th class="info col-sm-2">著者名</th>
+	                <th class="info col-sm-2">書籍名</th>
+	                <th class="info col-sm-2">出版社</th>
+	                <th class="info col-sm-2">書籍管理数</th>
+	                <th class="info col-sm-2">貸出状況</th>
+
+		         </tr>
+		         <tr th:each="list : ${borrowableList}">
+		            <td th:text="${list.isbn}"></td>
+		            <td th:text="${list.bookAuthor}"></td>
+		            <td th:text="${list.bookName}"></td>
+		            <td th:text="${list.publisherName}"></td>
+		            <td th:text="${list.bookRetention}"></td>
+		            <td th:text="${list.borrowableBook}"></td>
+		            <!--<td th:text="${book.condition}"></td>  -->
+		            <td>
+		            <!-- 書籍詳細画面へのリンク-->
+			            <span th:if="${list.condition}">
+			                 <a class="btn btn-primary" th:href="@{'/borrowBook/' + ${list.isbn}}">借りる</a>
+			            </span>
+		            </td>
+		          </tr>
+
+	        </table>
+        <!-- 書籍の種類数
+        <label th:text=" '合計：' + ${borrowableListCount} + '種類' "></label><br/> -->
+        <!-- 更新・削除処理の結果表示用
+        <label class="text-info" th:text="${result}">結果表示</label><br/>-->
+        <!-- 書籍登録用のリンク-->
+        <a class="btn btn-primary"  th:href="@{'/searchBook/form'}">書籍検索</a>
+    </div>
+</body>
+</html>

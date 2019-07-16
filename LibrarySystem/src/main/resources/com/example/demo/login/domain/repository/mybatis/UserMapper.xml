@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- クラス指定 -->
+<mapper
+namespace="com.example.demo.login.domain.repository.mybatis.UserMapper">
+	<!-- マッピング定義 -->
+	<resultMap type="com.example.demo.login.domain.model.User" id="user">
+		<id column="member_id" property="memberId"/>
+		<result column="password" property="password"/>
+		<result column="member_name" property="memberName"/>
+		<result column="birthday" property="birthday"/>
+		<result column="address" property="address"/>
+		<result column="tel_number" property="telNumber"/>
+		<result column="mail_address" property="mailAddress"/>
+		<result column="admin_flg" property="adminFlg"/>
+		<result column="create_date" property="createDate"/>
+		<result column="delete_date" property="deleteDate"/>
+		<result column="lending_book" property="lendingBook"/>
+		<result column="remarks" property="remarks"/>
+		<result column="executor" property="updateMember"/>
+	</resultMap>
+
+	<!-- ユーザー新規登録 -->
+	<insert id="insert">
+		<selectKey keyProperty="id" resultType="string" order="BEFORE">
+			select nextval('member_sequence', 'RS')
+		</selectKey>
+		insert into member(
+			member_id,
+			password,
+			member_name,
+			birthday,
+			address,
+			tel_number,
+			mail_address,
+			admin_flg,
+			create_date,
+			delete_date
+		) values(
+			#{id},
+			#{param1.password},
+			#{param1.memberName},
+			#{param1.birthday},
+			#{param1.address},
+			#{param1.telNumber},
+			#{param1.mailAddress},
+			#{param1.adminFlg},
+			#{param2},
+			#{param1.deleteDate}
+		)
+	</insert>
+
+	<!-- ユーザー一件取得-->
+	<select id="selectOne" resultMap="user">
+		select
+			member_id,
+			member_name,
+			address,
+			tel_number,
+			mail_address,
+			delete_date
+		from member
+		where
+			member_id = #{param1}
+		<if test="param2 != null">
+			and password = #{param2}
+		</if>
+	</select>
+
+	<!-- 件数取得 -->
+	<select id="count" resultType="Integer">
+		select count(*) from member where delete_date is null
+	</select>
+
+	<!-- 全件検索 -->
+	<select id="selectMany" resultMap="user">
+		select
+			m.member_id as member_id,
+			m.member_name as member_name,
+			m.birthday as birthday,
+			m.tel_number as tel_number,
+			m.mail_address as mail_address,
+			coalesce(lb.lending_book, 0) as lending_book
+		from member as m
+		left outer join
+			(select member_id, count(member_id) as lending_book, borrowing_date
+			  from lending_and_borrowing where borrowing_date is null group by member_id) as lb
+		on m.member_id = lb.member_id
+		where m.delete_date is null
+		limit #{divNum}, 6
+	</select>
+
+	<!-- 一件更新 -->
+	<update id="updateOne">
+		update member
+		set
+			executor = #{param1.updateMember},
+			member_name = #{param1.memberName},
+			address = #{param1.address},
+			tel_number = #{param1.telNumber},
+			mail_address = #{param1.mailAddress},
+			update_date = #{param2},
+			remarks = #{param1.remarks}
+		where member_id = #{param1.memberId}
+	</update>
+
+	<!-- 一件削除 -->
+	<update id="deleteOne">
+		update member
+		set
+			executor = #{param1.updateMember},
+			delete_date = #{param2},
+			remarks = #{param1.remarks}
+		where
+			member_id = #{param1.memberId}
+	</update>
+	<update id="changeLB">
+		update lending_and_borrowing
+		set
+			borrowing_date = #{param2}
+		where
+			member_id = #{param1.memberId}
+	</update>
+</mapper>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+
+    <!-- Bootstrapの設定 -->
+    <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+
+    <title>SignUp</title>
+</head>
+<body>
+    <div class="col-sm-5">
+        <div class="page-header">
+            <h1>ユーザー登録画面</h1>
+        </div>
+        <form method="post" action="/signup" th:object="${signupForm}">
+            <table class="table table-bordered table-hover">
+                <!-- 氏名入力エリア -->
+                <tr>
+                    <th class="active col-sm-3">氏名(必須)</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('memberName')} ? 'has-error'">
+                            <input type="text" class="form-control" th:field="*{memberName}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('memberName')}" th:errors="*{memberName}">memberName error</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 氏名(ひらがな)入力エリア -->
+                <tr>
+                    <th class="active col-sm-3">氏名(ひらがな)(必須)</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('kanaMemberName')} ? 'has-error'">
+                            <input type="text" class="form-control" th:field="*{kanaMemberName}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('kanaMemberName')}" th:errors="*{kanaMemberName}">kanaMemberName error</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- パスワードの入力エリア -->
+                <tr>
+                    <th class="active">パスワード(必須)</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
+                            <input type="text" class="form-control" th:field="*{password}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 生年月日の入力エリア -->
+                <tr>
+                    <th class="active">誕生日(必須)</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('birthday')} ? 'has-error'">
+                            <input type="text" class="form-control" placeholder="yyyy/MM/dd" th:field="*{birthday}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('birthday')}" th:errors="*{birthday}">birthday error</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 住所の入力エリア -->
+                <tr>
+                    <th class="active">住所(必須)</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('address')} ? 'has-error'">
+                            <input type="text" class="form-control" th:field="*{address}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('address')}" th:errors="*{address}">address error</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 電話番号の入力エリア -->
+                <tr>
+                    <th class="active">電話番号(任意)</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('telNumber')} ? 'has-error'">
+                            <input type="text" class="form-control" th:field="*{telNumber}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('telNumber')}" th:errors="*{telNumber}">telNumber error</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- メールアドレスの入力エリア -->
+                <tr>
+                    <th class="active">メールアドレス(必須)</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('mailAddress')} ? 'has-error'">
+                            <input type="text" class="form-control" th:field="*{mailAddress}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('mailAddress')}" th:errors="*{mailAddress}">address error</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <!-- エラーメッセージの一覧表示
+            <ul>
+                <li th:each="error : ${#fields.detailedErrors()}">
+                    <span th:text="${error.message}">Error message</span>
+                </li>
+            </ul>-->
+            <!-- ユーザー登録ボタン -->
+            <button class="btn btn-primary" type="submit" onclick="return confirm('入力した内容で新規ユーザーを登録しますか？')">ユーザー登録</button>
+        </form>
+    </div>
+</body>
+</html>

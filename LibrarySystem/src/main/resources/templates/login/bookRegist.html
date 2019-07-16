@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+
+    <!-- Bootstrapの設定 -->
+    <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+
+    <title>書籍登録</title>
+</head>
+<body>
+    <div class="col-sm-5">
+        <div class="page-header">
+            <h1>書籍登録画面</h1>
+        </div>
+        <form method="post" action="/bookList/regist" th:object="${bookRegistForm}">
+            <table class="table table-bordered table-hover">
+                <!--書籍名入力エリア -->
+                <tr>
+                    <th class="active col-sm-3">書籍名(必須)</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('bookName')} ? 'has-error'">
+                            <input type="text" class="form-control" th:field="*{bookName}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('bookName')}"
+                            							th:errors="*{bookName}">bookName error</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 著者名入力エリア -->
+                <tr>
+                    <th class="active">著者名(必須)</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('bookAuthor')} ? 'has-error'">
+                            <input type="text" class="form-control" th:field="*{bookAuthor}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('bookAuthor')}"
+                            							th:errors="*{bookAuthor}">bookAuthor error</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 出版社名入力エリア -->
+                <tr>
+                    <th class="active">出版社名(必須)</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('publisherName')} ? 'has-error'">
+                            <input type="text" class="form-control" th:field="*{publisherName}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('publisherName')}"
+                            							th:errors="*{publisherName}">publisherName error</span>
+                        </div>
+                    </td>
+                </tr>
+                <!-- 登録冊数入力エリア -->
+                <tr>
+                    <th class="active">登録冊数(必須)</th>
+                    <td>
+                        <div class="form-group" th:classappend="${#fields.hasErrors('bookRetention')} ? 'has-error'">
+                            <input type="text" class="form-control" th:field="*{bookRetention}"/>
+                            <span class="text-danger" th:if="${#fields.hasErrors('bookRetention')}"
+                            							th:errors="*{bookRetention}">bookRetention error</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <!-- エラーメッセージの一覧表示-->
+            <ul>
+                <li th:each="error : ${#fields.detailedErrors()}">
+                    <span th:text="${error.message}">Error message</span>
+                </li>
+            </ul>
+            <!-- 書籍登録ボタン -->
+            <button class="btn btn-primary" type="submit" onclick="return confirm('下記の書籍を新規に登録しますか?')">書籍登録</button>
+        </form>
+    </div>
+</body>
+</html>

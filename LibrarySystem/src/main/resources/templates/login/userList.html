@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"></meta>
+</head>
+<body>
+    <!-- コンテンツ部分 -->
+    <div th:fragment="userList_contents">
+        <div class="page-header">
+            <h1>ユーザー一覧</h1>
+            <span th:if="${#httpSession} != null" th:text="${session.memberName}"></span>
+            <p th:if="${#httpSession}" th:text="${session.memberName}"></p>
+        </div>
+        <table class="table table-bordered table-hover table-striped">
+            <tr>
+            	<th class="info col-sm-2">ユーザID</th>
+                <th class="info col-sm-2">ユーザ名</th>
+                <th class="info col-sm-2">生年月日</th>
+                <th class="info col-sm-2">電話番号</th>
+                <th class="info col-sm-2">メールアドレス</th>
+                <th class="info col-sm-2">借りている本の冊数</th>
+            </tr>
+            <tr th:each="user : ${userList}">
+            	<td th:text="${user.memberId}"></td>
+                <td th:text="${user.memberName}"></td>
+                <td th:text="${#dates.format(user.birthday, 'YYYY/MM/dd')}"></td>
+                <td th:text="${user.telNumber}"></td>
+                <td th:text="${user.mailAddress}"></td>
+                <td th:text="${user.lendingBook}"></td>
+                <td>
+                    <!-- ユーザー詳細画面へのリンク -->
+                    <a class="btn btn-primary" th:href="@{'/userDetail/' + ${user.memberId}}">詳細</a>
+                </td>
+            </tr>
+        </table>
+        <!-- ユーザー一覧の件数 -->
+        <label th:text=" '合計：' + ${userListCount} + '件' "></label><br/>
+        <!-- 更新・削除処理の結果表示用-->
+        <label class="text-info" th:text="${result}">結果表示</label><br/>
+        <!-- CSV出力用のリンク
+        <a class="btn btn-primary" th:href="@{'/userList/csv'}">CSV出力</a> -->
+        <div align="center" th:with="dataNum=1">
+			<ul class="pagination">
+			<li class="page-item"><a class="page-link" href="#"
+				aria-label="Previous"><span>&laquo;</span></a></li>
+			<li class="page-item"><a class="page-link" th:href="@{/userList(page=${1})}">1</a></li>
+			<li class="page-item" th:each="i:${#numbers.sequence(2, pageCount)}"><a class="page-link" th:href="@{/userList(page=${dataNum+(6*(i-1))})}" th:text="${i}"></a></li>
+			<li class="page-item"><a class="page-link" href="#"
+				aria-label="Next"><span>&raquo;</span></a></li>
+		</ul>
+		</div>
+    </div>
+</body>
+</html>
