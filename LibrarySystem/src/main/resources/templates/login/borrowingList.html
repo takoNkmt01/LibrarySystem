@@ -8,7 +8,7 @@
     <!-- コンテンツ部分 -->
     <div th:fragment="borrowingList_contents">
         <div class="page-header" th:object="${borrowingList}">
-            <h1>借りている書籍一覧</h1>
+            <h1><span th:text="${loginUser}"></span>が借りている書籍一覧</h1>
         </div>
         <table class="table table-bordered table-hover table-striped">
             <tr>

@@ -30,7 +30,7 @@ public class Util {
 
 	//Webページに表示するためのメソッド
 	public String getNowLoginUserAndID(User user) {
-		return "◎" + user.getMemberName() + "さん";
+		return "◎\"" + user.getMemberName() + "\"さん";
 	}
 
 	//ホーム画面に戻りたいマン
