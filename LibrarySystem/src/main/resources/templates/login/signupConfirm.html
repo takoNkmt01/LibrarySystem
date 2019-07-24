@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"></meta>
+
+     <!-- Bootstrapの設定 -->
+    <link th:href="@{/webjars/bootstrap/3.3.7-1/css/bootstrap.min.css}" rel="stylesheet"></link>
+    <script th:src="@{/webjars/jquery/1.11.1/jquery.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/3.3.7-1/js/bootstrap.min.js}"></script>
+</head>
+<body>
+    <div th:fragment="borrowConfirm_contents">
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="page-header">
+                    <h1>確認</h1>
+                </div>
+                <p>下記の書籍を借りますか?</p>
+                <form method="post" th:action="@{/finalize}" th:object="${signupForm}">
+                    <table class="table table-bordered table-hover">
+                        <tr>
+                            <th class="active">氏名</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('memberName')} ? 'has-error'">
+                                    <span th:text="*{memberName}"></span>
+                                    <input type="hidden" name="memberName" id="memberName" th:value="*{memberName}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="active">パスワード</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('password')} ? 'has-error'">
+                                    <span th:text="*{password}"></span>
+                                    <input type="hidden" name="password" id="password" th:value="*{password}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="active">誕生日</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('birthday')} ? 'has-error'">
+                                    <span th:text="*{birthday}"></span>
+                                    <input type="hidden" placeholder="yyyy/MM/dd" name="birthday" id="birthday" th:value="*{birthday}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="active">住所</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('address')} ? 'has-error'">
+                                    <span th:text="*{address}"></span>
+                                    <input type="hidden" name="address" id="address" th:value="*{address}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="active">電話番号</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('telNumber')} ? 'has-error'">
+                                    <span th:text="*{telNumber}"></span>
+                                    <input type="hidden" name="telNumber" id="telNumber" th:value="*{telNumber}"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <th class="active">メールアドレス</th>
+                            <td>
+                                <div class="form-group" th:classappend="${#fields.hasErrors('mailAddress')} ? 'has-error'">
+                                    <span th:text="*{mailAddress}"></span>
+                                    <input type="hidden" name="mailAddress" id="mailAddress" th:value="*{mailAddress}"/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                    <!-- 登録ボタン -->
+                    <button class="btn btn-primary btn-lg pull-right" type="submit" name="regist">登録</button>
+                    <!-- キャンセルボタン -->
+                    <button class="btn btn-danger btn-lg" type="submit" name="cancel">戻る</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

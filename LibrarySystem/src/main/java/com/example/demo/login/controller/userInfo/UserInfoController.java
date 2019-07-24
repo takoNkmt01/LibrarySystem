@@ -1,11 +1,10 @@
 package com.example.demo.login.controller.userInfo;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.login.domain.model.SignupForm;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.service.BookService;
+import com.example.demo.login.domain.service.UserDetailsImpl;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.util.Util;
 import com.example.demo.util.UtilPageBean;
@@ -30,8 +30,6 @@ public class UserInfoController {
 
 	@Autowired
 	Util util;
-	@Autowired
-	HttpSession session;
 	@Autowired
 	UserService userService;
 	@Autowired
@@ -51,8 +49,6 @@ public class UserInfoController {
 		model.addAttribute("userListCount", bean.getCountUser());
 		model.addAttribute("pageCount", bean.getPageCount());
 		model.addAttribute("page", bean.getNowPage());
-		//WebサイトにLoginUserを表示する
-		model.addAttribute("loginUser", util.getNowLoginUserAndID(util.getLoginUser()));
 
 		return "login/homeLayout";
 	}
@@ -74,22 +70,19 @@ public class UserInfoController {
 		}
 		//Modelに登録
 		model.addAttribute("signupForm", form);
-		//WebサイトにLoginUserを表示する
-		model.addAttribute("loginUser", util.getNowLoginUserAndID(util.getLoginUser()));
 
 		return "login/homeLayout";
 	}
 
 	//ユーザー更新用
 	@PostMapping(value = "/userDetail", params = "update")
-	public String postUserDetailUpdate(@ModelAttribute  SignupForm form, Model model) {
-
-		User loginUser = (User) session.getAttribute("loginUser");
+	public String postUserDetailUpdate(@AuthenticationPrincipal UserDetailsImpl userDetails,
+										@ModelAttribute  SignupForm form, Model model) {
 		User user = new User();
 
 		//formクラスをUserクラスに登録
 		BeanUtils.copyProperties(form, user);
-		user.setUpdateMember(loginUser.getMemberName());
+		user.setUpdateMember(userDetails.getUsername());
 
 		boolean reuslt = userService.updateOne(user, 1);
 
@@ -105,11 +98,10 @@ public class UserInfoController {
 
 	//ユーザー削除する。
 	@PostMapping(value = "/userDetail", params = "delete")
-	public String postUserDetailDelete(@ModelAttribute SignupForm form, Model model) {
-
-		User loginUser = (User) session.getAttribute("loginUser");
+	public String postUserDetailDelete(@AuthenticationPrincipal UserDetailsImpl userDetails,
+										@ModelAttribute SignupForm form, Model model) {
 		User user = new User();
-		user.setUpdateMember(loginUser.getMemberName());
+		user.setUpdateMember(userDetails.getUsername());
 		user.setMemberId(form.getMemberId());
 		user.setRemarks(form.getRemarks());
 

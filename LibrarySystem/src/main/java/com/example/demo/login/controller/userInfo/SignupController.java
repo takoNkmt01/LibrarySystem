@@ -33,13 +33,24 @@ public class SignupController {
 
 	//ユーザー登録画面のPOST用コントローラ
 	@PostMapping("/signup")
-	public String postSignUp(@ModelAttribute @Validated(GroupOrder.class) SignupForm form, BindingResult bindingResult, Model model) {
+	public String postSignUp(@ModelAttribute @Validated(GroupOrder.class) SignupForm form, BindingResult bindingResult,
+			Model model) {
 
-		if(bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors()) {
 			return getSignUp(form, model);
 		}
-
 		log.info(form);
+
+		//form.setBirthday(DateTimeFormatter.ofPattern("yyyy/MM/dd").format((TemporalAccessor) form.getBirthday()));
+
+		model.addAttribute("signupForm", form);
+
+		return "login/signupConfirm";
+
+	}
+
+	@PostMapping(value = "/finalize", params = "regist")
+	public String finalizeUserRegist(@ModelAttribute SignupForm form, Model model) {
 
 		//insert用変数
 		User user = new User();
@@ -55,12 +66,22 @@ public class SignupController {
 		//ユーザー登録処理
 		boolean result = userService.insert(user);
 
-		if(result == true) {
+		if (result == true) {
 			log.info("insert成功");
 			model.addAttribute("message", "登録完了しました。");
 		} else {
 			log.info("insert失敗");
 		}
 		return "redirect:/login";
+	}
+
+	@PostMapping(value = "/finalize", params = "cancel")
+	public String cancelUserRegist(@ModelAttribute SignupForm form, Model model) {
+
+		model.addAttribute("signupForm", form);
+		log.info(form);
+		System.out.println(form.getBirthday());
+
+		return getSignUp(form, model);
 	}
 }

@@ -17,9 +17,6 @@ public class ErrorAspect {
 	public void throwingNull(DataAccessException ex) {
 		//ログ出力
 		log.info("DataAccessException" + ex);
-		System.out.println("DAtaAccessException" + ex);
-
+		System.out.println("DataAccessException" + ex);
 	}
-
-
 }

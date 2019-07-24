@@ -76,7 +76,7 @@ public class LoginLogoutController {
 	@GetMapping("/home")
 	public String getHome(Model model) {
 		//WebサイトにLoginUserを表示する
-		model.addAttribute("loginUser", util.getNowLoginUserAndID(util.getLoginUser()));
+		//model.addAttribute("loginUser", util.getNowLoginUserAndID(util.getLoginUser()));
 		//コンテンツ部分にユーザー一覧を表示するための文字列を登録
 		model.addAttribute("contents", "login/home :: home_contents");
 
