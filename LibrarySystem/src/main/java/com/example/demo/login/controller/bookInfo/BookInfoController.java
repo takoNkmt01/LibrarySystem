@@ -6,6 +6,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,8 +22,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.login.domain.model.Book;
 import com.example.demo.login.domain.model.BookRegistForm;
 import com.example.demo.login.domain.model.GroupOrder;
-import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.service.BookService;
+import com.example.demo.login.domain.service.UserDetailsImpl;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.util.Util;
 import com.example.demo.util.UtilPageBean;
@@ -48,7 +49,8 @@ public class BookInfoController {
 
 		//書籍登録画面のPOST用メソッド
 		@PostMapping("/bookList/regist")
-		public String postBookRegist(@ModelAttribute @Validated(GroupOrder.class) BookRegistForm form, BindingResult bindingResult, Model model) {
+		public String postBookRegist(@AuthenticationPrincipal UserDetailsImpl userDetails,
+		@ModelAttribute @Validated(GroupOrder.class) BookRegistForm form, BindingResult bindingResult, Model model) {
 
 			if(bindingResult.hasErrors()) {
 				return getBookRegistPage(form, model);
@@ -60,7 +62,8 @@ public class BookInfoController {
 			//書籍登録用の処理
 			if(bookService.insert(form)) {
 				log.info("書籍登録完了");
-				util.getHomePage(model, "書籍の新規登録");
+				util.getHomePage(model, "書籍の新規登録", userDetails);
+				util.getNowLoginUser(userDetails, model);
 			} else {
 				log.info("書籍登録失敗");
 			}
@@ -69,7 +72,8 @@ public class BookInfoController {
 
 		//書籍一覧画面のGET用メソッド
 		@RequestMapping(value = "/bookList", method = RequestMethod.GET)
-		public String getBookList(Model model, @RequestParam("page") int divNum) {
+		public String getBookList(@AuthenticationPrincipal UserDetailsImpl userDetails,
+								Model model, @RequestParam("page") int divNum) {
 
 			//コンテンツ部分にユーザー一覧を表示するための文字列を登録
 			model.addAttribute("contents", "login/bookList :: bookList_contents");
@@ -80,16 +84,15 @@ public class BookInfoController {
 			model.addAttribute("bookListCount", bean.getCountBook());
 			model.addAttribute("pageCount", bean.getPageCount());
 			model.addAttribute("divNum", divNum);
-			//WebサイトにLoginUserを表示する
-			model.addAttribute("loginUser", util.getNowLoginUserAndID(util.getLoginUser()));
-
+			util.getNowLoginUser(userDetails, model);
 			return "login/homeLayout";
 
 		}
 
 		//書籍詳細画面
 		@GetMapping("/bookDetail/{id:.+}")
-		public String getBookDetail(@ModelAttribute BookRegistForm form, Model model, @PathVariable("id") String isbn) {
+		public String getBookDetail(@AuthenticationPrincipal UserDetailsImpl userDetails,
+		@ModelAttribute BookRegistForm form, Model model, @PathVariable("id") String isbn) {
 			//ISBN確認
 			log.info("ISBN番号 = " + isbn);
 
@@ -103,41 +106,37 @@ public class BookInfoController {
 				BeanUtils.copyProperties(book, form);
 			}
 			model.addAttribute("bookRegistForm", form);
-			//WebサイトにLoginUserを表示する
-			model.addAttribute("loginUser", util.getNowLoginUserAndID(util.getLoginUser()));
-
+			util.getNowLoginUser(userDetails, model);
 			return "login/homeLayout";
 		}
 
 		//更新処理
 		@PostMapping(value = "/bookDetail", params = "update")
-		public String postBookDetailUpdate(@ModelAttribute BookRegistForm form, Model model) {
-
-			User user = (User)session.getAttribute("loginUser");
+		public String postBookDetailUpdate(@AuthenticationPrincipal UserDetailsImpl userDetails,
+											@ModelAttribute BookRegistForm form, Model model) {
 			Book book = new Book();
 
 			BeanUtils.copyProperties(form, book);
-			book.setUpdateMember(user.getMemberName());
+			book.setUpdateMember(userDetails.getUser().getMemberName());
 			boolean result = bookService.updateOne(book, 1);
 
 			if(result == true) {
 				model.addAttribute("result", "更新成功");
-				util.getHomePage(model, "書籍情報の更新");
+				util.getHomePage(model, "書籍情報の更新", userDetails);
 			} else {
 				model.addAttribute("result", "更新失敗");
 			}
-
 			return "login/homeLayout";
 		}
 
 		//削除処理
 		@PostMapping(value = "/bookDetail", params = "delete")
-		public String postBookDetailDelete(@ModelAttribute BookRegistForm form, Model model) {
-			User user = (User)session.getAttribute("loginUser");
+		public String postBookDetailDelete(@AuthenticationPrincipal UserDetailsImpl userDetails,
+											@ModelAttribute BookRegistForm form, Model model) {
 			Book book = new Book();
 
 			BeanUtils.copyProperties(form, book);
-			book.setUpdateMember(user.getMemberName());
+			book.setUpdateMember(userDetails.getUser().getMemberName());
 
 			boolean result = bookService.updateOne(book, 0);
 
@@ -146,7 +145,7 @@ public class BookInfoController {
 			} else {
 				model.addAttribute("result", "削除失敗");
 			}
-			util.getHomePage(model, "書籍の削除");
+			util.getHomePage(model, "書籍の削除", userDetails);
 			return "login/homeLayout";
 		}
 }

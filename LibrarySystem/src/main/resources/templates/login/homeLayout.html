@@ -22,9 +22,9 @@
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" href="#">Library System</a>
+				<a class="navbar-brand" th:href="@{'/home'}">Library System</a>
 			</div>
-			<form method="post" th:action="@{/logout}">
+			<form method="post" th:action="@{'/logout'}">
 				<button class="btn btn-link pull-right navbar-brand" type="submit">ログアウト</button>
 			</form>
 		</div>
@@ -34,14 +34,14 @@
 		<div class="row">
 			<div class="col-sm-2 sidebar">
 				<ul class="nav nav-pills nav-stacked">
+					<li role="presentation" th:text="${nowLoginUser}"></li>
 					<li role="presentation">★メニュー</li>
 					<li role="presentation"><a href="/searchBook/form">本をさがす</a></li>
 					<li role="presentation"><a th:href="@{'/borrowableList'}">書籍を借りる</a></li><!-- 一覧から詳細へ飛んで、書籍を借りたい -->
 					<li role="presentation"><a th:href="@{'/borrowingList'}">書籍を返す</a></li><!-- 一覧から詳細へ飛んで、書籍を借りたい -->
-					<!--<li role="presentation"><a th:href="@{'/changeUserDetail'}">ユーザー情報の変更</a></li>-->
-					<li role="presentation">★システム管理者用</li>
-					<li role="presentation"><a th:href="@{/userList(page=${page=1})}">ユーザ管理</a></li>
-					<li role="presentation"><a th:href="@{/bookList(page=${page=1})}">書籍管理</a></li>
+					<li role="presentation" sec:authorize="hasRole('ADMIN')">★システム管理者用</li>
+					<li role="presentation" sec:authorize="hasRole('ADMIN')"><a th:href="@{/userList(page=${page=1})}">ユーザ管理</a></li>
+					<li role="presentation" sec:authorize="hasRole('ADMIN')"><a th:href="@{/bookList(page=${page=1})}">書籍管理</a></li>
 				</ul>
 			</div>
 		</div>

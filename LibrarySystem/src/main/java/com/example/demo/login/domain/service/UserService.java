@@ -3,6 +3,7 @@ package com.example.demo.login.domain.service;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.login.domain.model.User;
@@ -25,6 +26,9 @@ public class UserService {
 	@Autowired
 	UserDaoJdbcImpl dao;
 
+	@Autowired
+	PasswordEncoder passwordEncoder;
+
 	//カウント用メソッド
 	public int count() {
 		return dao.count();
@@ -37,6 +41,7 @@ public class UserService {
 	 */
 	public boolean insert(User user) {
 		//一件登録
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		boolean result = userMapper.insert(user, util.getToday());
 		return result;
 	}

@@ -16,7 +16,7 @@
         <div class="page-header">
             <h1>書籍検索</h1>
         </div>
-        <form method="post" action="/searchBook/list" th:object="${bookRegistForm}">
+        <form method="post" th:action="@{/searchBook/list}" th:object="${bookRegistForm}">
             <table class="table table-bordered table-hover">
             	 <!-- ISBN番号入力エリア -->
                 <tr>

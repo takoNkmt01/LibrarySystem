@@ -6,8 +6,11 @@ import java.time.format.DateTimeFormatter;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
+
+import com.example.demo.login.domain.service.UserDetailsImpl;
 
 @Component
 public class Util {
@@ -21,10 +24,15 @@ public class Util {
 		return DateTimeFormatter.ofPattern("yyyy-MM-dd").format(LocalDateTime.now());
 	}
 
+	public void getNowLoginUser(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
+		model.addAttribute("nowLoginUser", "◎" + userDetails.getUser().getMemberName() + "さん");
+	}
+
 
 	//ホーム画面に戻りたいマン
-	public void getHomePage(Model model, String message) {
+	public void getHomePage(Model model, String message, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 		model.addAttribute("contents", "login/home :: home_contents");
 		model.addAttribute("message", message + "が完了しました!");
+		getNowLoginUser(userDetails, model);
 	}
 }

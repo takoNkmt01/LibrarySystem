@@ -8,7 +8,7 @@
     <!-- コンテンツ部分 -->
     <div th:fragment="borrowingList_contents">
         <div class="page-header" th:object="${borrowingList}">
-            <h1><span th:text="${loginUser}"></span>が借りている書籍一覧</h1>
+            <h1><span th:text="${nowLoginUser}"></span>が借りている書籍一覧</h1>
         </div>
         <table class="table table-bordered table-hover table-striped">
             <tr>
@@ -25,9 +25,12 @@
                 <td th:text="${book.publisherName}"></td>
                 <td th:text="${book.lendingDate}"></td>
                 <td>
-                    <!-- 書籍詳細画面へのリンク -->
-                    <a class="btn btn-primary" th:href="@{'/returnBook/' + ${book.isbn}}"
-                    	onclick="return confirm('この本を返却してよろしいですか？')">返却</a>
+                	<form method="post" th:action="@{'returnBook/' + ${book.isbn} + '/' + ${book.lendingDate}}">
+                		<Button class="btn btn-primary" type="submit" onclick="return confirm('この本を返却してよろしいですか？')">返却</Button>
+                	</form>
+                    <!-- 書籍詳細画面へのリンク  <button class="btn btn-primary" th:href="@{'/returnBook/' + ${book.isbn}}"
+                    	onclick="return confirm('この本を返却してよろしいですか？')">返却</button>-->
+
                 </td>
             </tr>
         </table>

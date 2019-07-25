@@ -86,7 +86,7 @@ public class UserInfoController {
 
 		//formクラスをUserクラスに登録
 		BeanUtils.copyProperties(form, user);
-		user.setUpdateMember(userDetails.getUsername());
+		user.setUpdateMember(userDetails.getUser().getMemberName());
 
 		boolean reuslt = userService.updateOne(user, 1);
 
@@ -105,7 +105,7 @@ public class UserInfoController {
 	public String postUserDetailDelete(@AuthenticationPrincipal UserDetailsImpl userDetails,
 										@ModelAttribute SignupForm form, Model model) {
 		User user = new User();
-		user.setUpdateMember(userDetails.getUsername());
+		user.setUpdateMember(userDetails.getUser().getMemberName());
 		user.setMemberId(form.getMemberId());
 		user.setRemarks(form.getRemarks());
 
