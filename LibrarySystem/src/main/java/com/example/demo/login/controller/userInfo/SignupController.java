@@ -41,12 +41,27 @@ public class SignupController {
 		}
 		log.info(form);
 
-		//form.setBirthday(DateTimeFormatter.ofPattern("yyyy/MM/dd").format((TemporalAccessor) form.getBirthday()));
+		//insert用変数
+		User user = new User();
 
-		model.addAttribute("signupForm", form);
+		user.setMemberName(form.getMemberName());
+		user.setPassword(form.getPassword());
+		user.setBirthday(form.getBirthday());
+		user.setAddress(form.getAddress());
+		user.setTelNumber(form.getTelNumber());
+		user.setMailAddress(form.getMailAddress());
+		user.setAdminFlg("USER");
 
-		return "login/signupConfirm";
+		//ユーザー登録処理
+		boolean result = userService.insert(user);
 
+		if (result == true) {
+			log.info("insert成功");
+			model.addAttribute("message", "登録完了しました。");
+		} else {
+			log.info("insert失敗");
+		}
+		return "redirect:/login";
 	}
 
 	@PostMapping(value = "/finalize", params = "regist")

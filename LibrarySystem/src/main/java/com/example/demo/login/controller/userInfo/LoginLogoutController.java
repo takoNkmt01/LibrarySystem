@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import com.example.demo.login.domain.model.SignupForm;
 import com.example.demo.login.domain.model.User;
 import com.example.demo.login.domain.service.LendingBorrowingService;
+import com.example.demo.login.domain.service.UserDetailsImpl;
 import com.example.demo.login.domain.service.UserService;
 import com.example.demo.util.Util;
 
@@ -23,17 +25,12 @@ import com.example.demo.util.Util;
 public class LoginLogoutController {
 
 	Log log = LogFactory.getLog(LoginLogoutController.class);
-
-
 	@Autowired
 	UserService userService;
-
 	@Autowired
 	Util util;
-
 	@Autowired
 	LendingBorrowingService lendingBorrowingService;
-
 	@Autowired
 	HttpSession session;
 
@@ -74,11 +71,10 @@ public class LoginLogoutController {
 
 	//ホーム画面ＧＥＴメソッド
 	@GetMapping("/home")
-	public String getHome(Model model) {
-		//WebサイトにLoginUserを表示する
-		//model.addAttribute("loginUser", util.getNowLoginUserAndID(util.getLoginUser()));
+	public String getHome(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 		//コンテンツ部分にユーザー一覧を表示するための文字列を登録
 		model.addAttribute("contents", "login/home :: home_contents");
+		util.getNowLoginUser(userDetails, model);
 
 		return "login/homeLayout";
 	}

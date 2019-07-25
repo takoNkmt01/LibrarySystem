@@ -38,7 +38,8 @@ public class UserInfoController {
 	//ユーザー一覧画面のGET用メソッド
 	//@GetMapping("/userList?page={id}")
 	@RequestMapping(value = "/userList", method = RequestMethod.GET)
-	public String getUserList(Model model, @RequestParam("page") int divNum) {
+	public String getUserList(@AuthenticationPrincipal UserDetailsImpl userDetails,
+							Model model, @RequestParam("page") int divNum) {
 
 		//コンテンツ部分にユーザー一覧を表示するための文字列を登録
 		model.addAttribute("contents", "login/userList :: userList_contents");
@@ -49,13 +50,15 @@ public class UserInfoController {
 		model.addAttribute("userListCount", bean.getCountUser());
 		model.addAttribute("pageCount", bean.getPageCount());
 		model.addAttribute("page", bean.getNowPage());
+		util.getNowLoginUser(userDetails, model);
 
 		return "login/homeLayout";
 	}
 
 	//ユーザー詳細画面
 	@GetMapping("/userDetail/{id:.+}")
-	public String getUserDetail(@ModelAttribute SignupForm form, Model model, @PathVariable("id") String memberId) {
+	public String getUserDetail(@AuthenticationPrincipal UserDetailsImpl userDetails,
+	@ModelAttribute SignupForm form, Model model, @PathVariable("id") String memberId) {
 		//ユーザーID確認
 		log.info("member_id = " + memberId);
 
@@ -70,6 +73,7 @@ public class UserInfoController {
 		}
 		//Modelに登録
 		model.addAttribute("signupForm", form);
+		util.getNowLoginUser(userDetails, model);
 
 		return "login/homeLayout";
 	}
@@ -91,7 +95,7 @@ public class UserInfoController {
 		} else {
 			model.addAttribute("result", "更新失敗");
 		}
-		util.getHomePage(model, "ユーザー情報の更新");
+		util.getHomePage(model, "ユーザー情報の更新", userDetails);
 
 		return "login/homeLayout";
 	}
@@ -115,7 +119,7 @@ public class UserInfoController {
 		//コンテンツ部分にユーザー一覧を表示するための文字列を登録
 		model.addAttribute("contents", "login/userList :: userList_contents");
 
-		util.getHomePage(model, "ユーザーの強制退会");
+		util.getHomePage(model, "ユーザーの強制退会", userDetails);
 
 		return "login/homeLayout";
 	}
