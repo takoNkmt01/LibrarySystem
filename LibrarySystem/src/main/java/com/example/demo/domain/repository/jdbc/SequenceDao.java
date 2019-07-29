@@ -1,4 +1,4 @@
-package com.example.demo.login.domain.repository.jdbc;
+package com.example.demo.domain.repository.jdbc;
 
 import java.util.Map;
 

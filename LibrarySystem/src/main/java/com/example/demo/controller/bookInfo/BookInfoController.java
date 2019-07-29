@@ -1,4 +1,4 @@
-package com.example.demo.login.controller.bookInfo;
+package com.example.demo.controller.bookInfo;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.login.domain.model.Book;
-import com.example.demo.login.domain.model.BookRegistForm;
-import com.example.demo.login.domain.model.GroupOrder;
-import com.example.demo.login.domain.service.BookService;
-import com.example.demo.login.domain.service.UserDetailsImpl;
-import com.example.demo.login.domain.service.UserService;
+import com.example.demo.domain.model.Book;
+import com.example.demo.domain.model.BookRegistForm;
+import com.example.demo.domain.model.GroupOrder;
+import com.example.demo.domain.service.BookService;
+import com.example.demo.domain.service.UserDetailsImpl;
+import com.example.demo.domain.service.UserService;
 import com.example.demo.util.Util;
 import com.example.demo.util.UtilPageBean;
 

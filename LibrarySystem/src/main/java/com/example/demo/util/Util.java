@@ -10,7 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-import com.example.demo.login.domain.service.UserDetailsImpl;
+import com.example.demo.domain.service.UserDetailsImpl;
 
 @Component
 public class Util {

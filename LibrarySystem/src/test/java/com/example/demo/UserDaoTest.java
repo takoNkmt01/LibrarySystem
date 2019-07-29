@@ -9,7 +9,7 @@ import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.example.demo.login.domain.repository.mybatis.UserMapper;
+import com.example.demo.domain.repository.mybatis.UserMapper;
 
 //テスト用アノテーション
 @RunWith(SpringRunner.class)

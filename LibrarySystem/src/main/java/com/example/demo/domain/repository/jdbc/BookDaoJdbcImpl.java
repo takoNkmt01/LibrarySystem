@@ -1,4 +1,4 @@
-package com.example.demo.login.domain.repository.jdbc;
+package com.example.demo.domain.repository.jdbc;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,8 +12,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.login.domain.model.Book;
-import com.example.demo.login.domain.model.BookRegistForm;
+import com.example.demo.domain.model.Book;
+import com.example.demo.domain.model.BookRegistForm;
 import com.example.demo.util.Util;
 
 @Repository

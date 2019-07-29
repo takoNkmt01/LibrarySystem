@@ -1,4 +1,4 @@
-package com.example.demo.login.domain.service;
+package com.example.demo.domain.service;
 
 import java.util.Collection;
 
@@ -6,7 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.example.demo.login.domain.model.UserJPA;
+import com.example.demo.domain.model.UserJPA;
 
 public class UserDetailsImpl implements UserDetails{
 	private final UserJPA user;

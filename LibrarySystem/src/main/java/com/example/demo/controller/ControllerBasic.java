@@ -1,4 +1,4 @@
-package com.example.demo.login.controller;
+package com.example.demo.controller;
 
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;

@@ -3,8 +3,8 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- クラス指定 -->
 <mapper
-namespace="com.example.demo.login.domain.repository.mybatis.BookMapper">
-	<resultMap type="com.example.demo.login.domain.model.Book" id="book">
+namespace="com.example.demo.domain.repository.mybatis.BookMapper">
+	<resultMap type="com.example.demo.domain.model.Book" id="book">
 		<id column="isbn" property="isbn"/>
 		<result column="book_name" property="bookName"/>
 		<result column="book_author" property="bookAuthor"/>

@@ -3,9 +3,9 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!-- クラス指定 -->
 <mapper
-namespace="com.example.demo.login.domain.repository.mybatis.UserMapper">
+namespace="com.example.demo.domain.repository.mybatis.UserMapper">
 	<!-- マッピング定義 -->
-	<resultMap type="com.example.demo.login.domain.model.User" id="user">
+	<resultMap type="com.example.demo.domain.model.User" id="user">
 		<id column="member_id" property="memberId"/>
 		<result column="password" property="password"/>
 		<result column="member_name" property="memberName"/>

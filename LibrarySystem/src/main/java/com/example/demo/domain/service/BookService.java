@@ -1,15 +1,15 @@
-package com.example.demo.login.domain.service;
+package com.example.demo.domain.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.login.domain.model.Book;
-import com.example.demo.login.domain.model.BookRegistForm;
-import com.example.demo.login.domain.repository.jdbc.BookDaoJdbcImpl;
-import com.example.demo.login.domain.repository.jdbc.SeachBookJdbcImpl;
-import com.example.demo.login.domain.repository.mybatis.BookMapper;
+import com.example.demo.domain.model.Book;
+import com.example.demo.domain.model.BookRegistForm;
+import com.example.demo.domain.repository.jdbc.BookDaoJdbcImpl;
+import com.example.demo.domain.repository.jdbc.SeachBookJdbcImpl;
+import com.example.demo.domain.repository.mybatis.BookMapper;
 import com.example.demo.util.Util;
 import com.example.demo.util.UtilPageBean;
 

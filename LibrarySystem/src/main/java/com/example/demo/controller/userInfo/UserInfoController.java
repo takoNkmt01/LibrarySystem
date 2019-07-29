@@ -1,4 +1,4 @@
-package com.example.demo.login.controller.userInfo;
+package com.example.demo.controller.userInfo;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.demo.login.domain.model.SignupForm;
-import com.example.demo.login.domain.model.User;
-import com.example.demo.login.domain.service.BookService;
-import com.example.demo.login.domain.service.UserDetailsImpl;
-import com.example.demo.login.domain.service.UserService;
+import com.example.demo.domain.model.SignupForm;
+import com.example.demo.domain.model.User;
+import com.example.demo.domain.service.BookService;
+import com.example.demo.domain.service.UserDetailsImpl;
+import com.example.demo.domain.service.UserService;
 import com.example.demo.util.Util;
 import com.example.demo.util.UtilPageBean;
 

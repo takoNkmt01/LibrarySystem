@@ -10,7 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.demo.login.domain.service.UserDetailsServiceImpl;
+import com.example.demo.domain.service.UserDetailsServiceImpl;
 
 @Configuration
 @EnableWebSecurity
@@ -30,7 +30,11 @@ public class WebSecirityConfig extends WebSecurityConfigurerAdapter {
 			.antMatchers("/login").permitAll()
 			.antMatchers("/signup").permitAll()
 			.antMatchers("/userList**").hasAuthority("ROLE_ADMIN")
+			.antMatchers("/userList/**").hasAuthority("ROLE_ADMIN")
+			.antMatchers("/userDetail/**").hasAuthority("ROLE_ADMIN")
 			.antMatchers("/bookList**").hasAuthority("ROLE_ADMIN")
+			.antMatchers("/bookList/**").hasAuthority("ROLE_ADMIN")
+			.antMatchers("/bookDetail/**").hasAuthority("ROLE_ADMIN")
 			.antMatchers("/**").authenticated()
 			.and()
 			.formLogin()

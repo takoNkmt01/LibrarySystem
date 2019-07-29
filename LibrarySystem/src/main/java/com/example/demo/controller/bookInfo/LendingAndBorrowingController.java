@@ -1,4 +1,4 @@
-package com.example.demo.login.controller.bookInfo;
+package com.example.demo.controller.bookInfo;
 
 import java.util.List;
 
@@ -17,13 +17,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.login.controller.ControllerBasic;
-import com.example.demo.login.domain.model.Book;
-import com.example.demo.login.domain.model.SignupForm;
-import com.example.demo.login.domain.service.BookService;
-import com.example.demo.login.domain.service.LendingBorrowingService;
-import com.example.demo.login.domain.service.UserDetailsImpl;
-import com.example.demo.login.domain.service.UserService;
+import com.example.demo.controller.ControllerBasic;
+import com.example.demo.domain.model.Book;
+import com.example.demo.domain.model.SignupForm;
+import com.example.demo.domain.service.BookService;
+import com.example.demo.domain.service.LendingBorrowingService;
+import com.example.demo.domain.service.UserDetailsImpl;
+import com.example.demo.domain.service.UserService;
 import com.example.demo.util.Util;
 import com.example.demo.util.UtilPageBean;
 

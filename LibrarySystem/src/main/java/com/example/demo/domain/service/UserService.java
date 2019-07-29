@@ -1,4 +1,4 @@
-package com.example.demo.login.domain.service;
+package com.example.demo.domain.service;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.login.domain.model.User;
-import com.example.demo.login.domain.repository.jdbc.UserDaoJdbcImpl;
-import com.example.demo.login.domain.repository.mybatis.UserMapper;
+import com.example.demo.domain.model.User;
+import com.example.demo.domain.repository.jdbc.UserDaoJdbcImpl;
+import com.example.demo.domain.repository.mybatis.UserMapper;
 import com.example.demo.util.Util;
 import com.example.demo.util.UtilPageBean;
 

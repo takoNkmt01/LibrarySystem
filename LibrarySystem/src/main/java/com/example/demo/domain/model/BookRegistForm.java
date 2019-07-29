@@ -1,4 +1,4 @@
-package com.example.demo.login.domain.model;
+package com.example.demo.domain.model;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;

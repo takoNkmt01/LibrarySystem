@@ -1,4 +1,4 @@
-package com.example.demo.login.domain.repository;
+package com.example.demo.domain.repository;
 
 public class UserDao {
 

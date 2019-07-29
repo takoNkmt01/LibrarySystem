@@ -1,4 +1,4 @@
-package com.example.demo.login.domain.model;
+package com.example.demo.domain.model;
 
 public interface ValidGroup3 {
 

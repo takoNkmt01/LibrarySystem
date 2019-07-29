@@ -1,4 +1,4 @@
-package com.example.demo.login.domain.service;
+package com.example.demo.domain.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -6,8 +6,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.login.domain.model.UserJPA;
-import com.example.demo.login.domain.repository.UserRepository;
+import com.example.demo.domain.model.UserJPA;
+import com.example.demo.domain.repository.UserRepository;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService{

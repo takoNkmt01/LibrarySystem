@@ -1,4 +1,4 @@
-package com.example.demo.login.controller.userInfo;
+package com.example.demo.controller.userInfo;
 
 import java.util.Objects;
 
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.demo.login.domain.model.SignupForm;
-import com.example.demo.login.domain.model.User;
-import com.example.demo.login.domain.service.LendingBorrowingService;
-import com.example.demo.login.domain.service.UserDetailsImpl;
-import com.example.demo.login.domain.service.UserService;
+import com.example.demo.domain.model.SignupForm;
+import com.example.demo.domain.model.User;
+import com.example.demo.domain.service.LendingBorrowingService;
+import com.example.demo.domain.service.UserDetailsImpl;
+import com.example.demo.domain.service.UserService;
 import com.example.demo.util.Util;
 
 @Controller
