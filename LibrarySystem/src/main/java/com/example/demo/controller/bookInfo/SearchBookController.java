@@ -41,17 +41,17 @@ public class SearchBookController {
 	@GetMapping("/searchBook/form")
 	public String getSearchBookPage(@AuthenticationPrincipal UserDetailsImpl userDetails,
 									@ModelAttribute BookRegistForm form ,Model model) {
-		model.addAttribute("contents", "login/searchBook :: searchBookForm_contents");
+		model.addAttribute("contents", "bookInfo/searchBook :: searchBookForm_contents");
 		util.getNowLoginUser(userDetails, model);
 
-		return "login/homeLayout";
+		return "homeLayout";
 	}
 	//ログインユーザーが借りている書籍一覧
 		@PostMapping("/searchBook/list")
 		public String getSearchBookList(@AuthenticationPrincipal UserDetailsImpl userDetails,
 										@ModelAttribute BookRegistForm form, Model model) {
 
-			model.addAttribute("contents", "login/borrowableList :: borrowableList_contents");
+			model.addAttribute("contents", "bookInfo/borrowableList :: borrowableList_contents");
 
 			System.out.println(form.getIsbn() + "," + form.getBookName()
 								+ "," + form.getBookAuthor() + "," + form.getPublisherName());
@@ -62,6 +62,6 @@ public class SearchBookController {
 			model.addAttribute("borrowableList", bean.getBookList());
 			model.addAttribute("bookListCount", bean.getCountBook());
 			util.getNowLoginUser(userDetails, model);
-			return "login/homeLayout";
+			return "homeLayout";
 		}
 }

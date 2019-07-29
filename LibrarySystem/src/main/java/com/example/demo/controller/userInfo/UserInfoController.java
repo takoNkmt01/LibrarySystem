@@ -42,7 +42,7 @@ public class UserInfoController {
 							Model model, @RequestParam("page") int divNum) {
 
 		//コンテンツ部分にユーザー一覧を表示するための文字列を登録
-		model.addAttribute("contents", "login/userList :: userList_contents");
+		model.addAttribute("contents", "userInfo/userList :: userList_contents");
 		log.info(divNum);
 		//ユーザー一覧と件数をmodelに登録
 		UtilPageBean bean = userService.selectMany(divNum);
@@ -52,7 +52,7 @@ public class UserInfoController {
 		model.addAttribute("page", bean.getNowPage());
 		util.getNowLoginUser(userDetails, model);
 
-		return "login/homeLayout";
+		return "homeLayout";
 	}
 
 	//ユーザー詳細画面
@@ -63,7 +63,7 @@ public class UserInfoController {
 		log.info("member_id = " + memberId);
 
 		//コンテンツ部分にユーザー詳細画面を表示するための文字列を登録
-		model.addAttribute("contents", "login/userDetail :: userDetail_contents");
+		model.addAttribute("contents", "userInfo/userDetail :: userDetail_contents");
 
 		//MemberIdのチェック
 		if (memberId != null && memberId.length() > 0) {
@@ -75,7 +75,7 @@ public class UserInfoController {
 		model.addAttribute("signupForm", form);
 		util.getNowLoginUser(userDetails, model);
 
-		return "login/homeLayout";
+		return "homeLayout";
 	}
 
 	//ユーザー更新用
@@ -97,7 +97,7 @@ public class UserInfoController {
 		}
 		util.getHomePage(model, "ユーザー情報の更新", userDetails);
 
-		return "login/homeLayout";
+		return "homeLayout";
 	}
 
 	//ユーザー削除する。
@@ -117,10 +117,10 @@ public class UserInfoController {
 			model.addAttribute("result", "削除失敗");
 		}
 		//コンテンツ部分にユーザー一覧を表示するための文字列を登録
-		model.addAttribute("contents", "login/userList :: userList_contents");
+		model.addAttribute("contents", "userInfo/userList :: userList_contents");
 
 		util.getHomePage(model, "ユーザーの強制退会", userDetails);
 
-		return "login/homeLayout";
+		return "homeLayout";
 	}
 }

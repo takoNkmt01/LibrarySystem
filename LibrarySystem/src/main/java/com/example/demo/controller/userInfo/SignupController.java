@@ -28,7 +28,7 @@ public class SignupController {
 	@GetMapping("/signup")
 	public String getSignUp(@ModelAttribute SignupForm form, Model model) {
 
-		return "login/signup";
+		return "signup";
 	}
 
 	//ユーザー登録画面のPOST用コントローラ

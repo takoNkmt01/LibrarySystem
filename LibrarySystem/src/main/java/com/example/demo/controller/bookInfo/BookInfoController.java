@@ -57,7 +57,7 @@ public class BookInfoController {
 			}
 			log.info(form);
 
-			model.addAttribute("contents", "login/home :: home_contents");
+			model.addAttribute("contents", "home :: home_contents");
 
 			//書籍登録用の処理
 			if(bookService.insert(form)) {
@@ -67,7 +67,7 @@ public class BookInfoController {
 			} else {
 				log.info("書籍登録失敗");
 			}
-			return "login/homeLayout";
+			return "homeLayout";
 		}
 
 		//書籍一覧画面のGET用メソッド
@@ -76,7 +76,7 @@ public class BookInfoController {
 								Model model, @RequestParam("page") int divNum) {
 
 			//コンテンツ部分にユーザー一覧を表示するための文字列を登録
-			model.addAttribute("contents", "login/bookList :: bookList_contents");
+			model.addAttribute("contents", "bookInfo/bookList :: bookList_contents");
 
 			//ユーザー一覧の作成しModelに登録
 			UtilPageBean bean = bookService.selectAllBook(divNum);
@@ -85,7 +85,7 @@ public class BookInfoController {
 			model.addAttribute("pageCount", bean.getPageCount());
 			model.addAttribute("divNum", divNum);
 			util.getNowLoginUser(userDetails, model);
-			return "login/homeLayout";
+			return "homeLayout";
 
 		}
 
@@ -97,7 +97,7 @@ public class BookInfoController {
 			log.info("ISBN番号 = " + isbn);
 
 			//コンテンツ部分に書籍詳細画面を表示するための文字列を登録
-			model.addAttribute("contents", "login/bookDetail :: bookDetail_contents");
+			model.addAttribute("contents", "bookInfo/bookDetail :: bookDetail_contents");
 
 			//ISBN番号のチェック
 			if(isbn != null && isbn.length() > 0) {
@@ -107,7 +107,7 @@ public class BookInfoController {
 			}
 			model.addAttribute("bookRegistForm", form);
 			util.getNowLoginUser(userDetails, model);
-			return "login/homeLayout";
+			return "homeLayout";
 		}
 
 		//更新処理
@@ -126,7 +126,7 @@ public class BookInfoController {
 			} else {
 				model.addAttribute("result", "更新失敗");
 			}
-			return "login/homeLayout";
+			return "homeLayout";
 		}
 
 		//削除処理
@@ -146,6 +146,6 @@ public class BookInfoController {
 				model.addAttribute("result", "削除失敗");
 			}
 			util.getHomePage(model, "書籍の削除", userDetails);
-			return "login/homeLayout";
+			return "homeLayout";
 		}
 }

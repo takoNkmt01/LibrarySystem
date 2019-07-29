@@ -73,10 +73,10 @@ public class LoginLogoutController {
 	@GetMapping("/home")
 	public String getHome(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
 		//コンテンツ部分にユーザー一覧を表示するための文字列を登録
-		model.addAttribute("contents", "login/home :: home_contents");
+		model.addAttribute("contents", "home :: home_contents");
 		util.getNowLoginUser(userDetails, model);
 
-		return "login/homeLayout";
+		return "homeLayout";
 	}
 
 	//ログアウト用メソッド

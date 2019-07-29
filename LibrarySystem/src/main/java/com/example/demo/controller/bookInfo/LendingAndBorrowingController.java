@@ -49,12 +49,12 @@ public class LendingAndBorrowingController extends ControllerBasic {
 
 	//書籍一覧を返す共通メソッド
 	public String getBookList(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
-		model.addAttribute("contents", "login/borrowableList :: borrowableList_contents");
+		model.addAttribute("contents", "lending_and_borrowing/borrowableList :: borrowableList_contents");
 
 		List<Book> borrowableList = lendingBorrowingService.getBorrowableBook();
 		model.addAttribute("borrowableList", borrowableList);
 		util.getNowLoginUser(userDetails, model);
-		return "login/homeLayout";
+		return "homeLayout";
 	}
 
 	//ログインユーザーが借りれる書籍リスト
@@ -67,14 +67,14 @@ public class LendingAndBorrowingController extends ControllerBasic {
 	@GetMapping("/borrowingList")
 	public String getLendingList(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
 
-		model.addAttribute("contents", "login/borrowingList :: borrowingList_contents");
+		model.addAttribute("contents", "lending_and_borrowing/borrowingList :: borrowingList_contents");
 
 		UtilPageBean bean = lendingBorrowingService.getBorrowingBook(userDetails.getUsername());
 		model.addAttribute("borrowingList", bean.getBookList());
 		model.addAttribute("borrowingBookCount", bean.getCountBook());
 		util.getNowLoginUser(userDetails, model);
 
-		return "login/homeLayout";
+		return "homeLayout";
 	}
 
 	//書籍貸し出しの最終確認画面へ
@@ -84,7 +84,7 @@ public class LendingAndBorrowingController extends ControllerBasic {
 
 		log.info("ISBN:" + isbn);
 
-		model.addAttribute("contents", "login/borrowConfirm :: borrowConfirm_contents");
+		model.addAttribute("contents", "lending_and_borrowing/borrowConfirm :: borrowConfirm_contents");
 
 		Book book = null;
 
@@ -94,7 +94,7 @@ public class LendingAndBorrowingController extends ControllerBasic {
 		}
 		model.addAttribute("book", book);
 		util.getNowLoginUser(userDetails, model);
-		return "login/homeLayout";
+		return "homeLayout";
 	}
 	//書籍貸し出しメソッドPOST
 	@PostMapping(value = "/borrowDecide", params = "borrow")
@@ -118,7 +118,7 @@ public class LendingAndBorrowingController extends ControllerBasic {
 	    //ホーム画面へ戻るよー
 	    util.getHomePage(model, "貸出手続き", userDetails);
 
-	    return "login/homeLayout";
+	    return "homeLayout";
 	}
 	//貸出確認キャンセル用メソッド
 	@PostMapping(value = "borrowDecide", params = "cancel")
@@ -141,11 +141,11 @@ public class LendingAndBorrowingController extends ControllerBasic {
 		} else {
 			log.info("更新失敗");
 		}
-		model.addAttribute("contents", "login/borrowingList :: borrowingList_contents");
+		model.addAttribute("contents", "lending_and_borrowing/borrowingList :: borrowingList_contents");
 
 		util.getHomePage(model, "書籍の返却", userDetails);
 
-		return "login/homeLayout";
+		return "homeLayout";
 	}
 
 	@ExceptionHandler(DataAccessException.class)
