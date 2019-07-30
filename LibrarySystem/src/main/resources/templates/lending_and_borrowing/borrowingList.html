@@ -25,7 +25,7 @@
                 <td th:text="${book.publisherName}"></td>
                 <td th:text="${book.lendingDate}"></td>
                 <td>
-                	<form method="post" th:action="@{'returnBook/' + ${book.isbn} + '/' + ${book.lendingDate}}">
+                	<form method="post" th:action="@{'returnBook/' + ${book.isbn}}">
                 		<Button class="btn btn-primary" type="submit" onclick="return confirm('この本を返却してよろしいですか？')">返却</Button>
                 	</form>
                     <!-- 書籍詳細画面へのリンク  <button class="btn btn-primary" th:href="@{'/returnBook/' + ${book.isbn}}"

@@ -1,7 +1,5 @@
 package com.example.demo.controller.bookInfo;
 
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -34,9 +32,6 @@ public class SearchBookController {
 	@Autowired
 	LendingBorrowingService lendingBorrowingService;
 
-	@Autowired
-	HttpSession session;
-
 	//書籍検索ページ
 	@GetMapping("/searchBook/form")
 	public String getSearchBookPage(@AuthenticationPrincipal UserDetailsImpl userDetails,
@@ -51,7 +46,7 @@ public class SearchBookController {
 		public String getSearchBookList(@AuthenticationPrincipal UserDetailsImpl userDetails,
 										@ModelAttribute BookRegistForm form, Model model) {
 
-			model.addAttribute("contents", "bookInfo/borrowableList :: borrowableList_contents");
+			model.addAttribute("contents", "lending_and_borrowing/borrowableList :: borrowableList_contents");
 
 			System.out.println(form.getIsbn() + "," + form.getBookName()
 								+ "," + form.getBookAuthor() + "," + form.getPublisherName());

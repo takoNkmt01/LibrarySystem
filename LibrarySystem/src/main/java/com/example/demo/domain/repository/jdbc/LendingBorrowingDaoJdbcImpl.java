@@ -26,9 +26,6 @@ public class LendingBorrowingDaoJdbcImpl {
 	@Autowired
 	BookDaoJdbcImpl bookDao;
 
-	@Autowired
-	SequenceDao sequence;
-
 	public Date getLendingDate(String isbn, String memberId) throws DataAccessException {
 		String sql = "select lending_date from lending_and_borrowing"
 				 + " where borrowing_date is null"

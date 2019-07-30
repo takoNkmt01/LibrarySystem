@@ -2,8 +2,6 @@ package com.example.demo.controller.bookInfo;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,9 +41,6 @@ public class LendingAndBorrowingController extends ControllerBasic {
 
 	@Autowired
 	LendingBorrowingService lendingBorrowingService;
-
-	@Autowired
-	HttpSession session;
 
 	//書籍一覧を返す共通メソッド
 	public String getBookList(@AuthenticationPrincipal UserDetailsImpl userDetails, Model model) {
@@ -141,7 +136,7 @@ public class LendingAndBorrowingController extends ControllerBasic {
 		} else {
 			log.info("更新失敗");
 		}
-		model.addAttribute("contents", "lending_and_borrowing/borrowingList :: borrowingList_contents");
+		//model.addAttribute("contents", "lending_and_borrowing/borrowingList :: borrowingList_contents");
 
 		util.getHomePage(model, "書籍の返却", userDetails);
 

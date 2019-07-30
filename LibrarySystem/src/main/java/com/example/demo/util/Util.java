@@ -31,7 +31,7 @@ public class Util {
 
 	//ホーム画面に戻りたいマン
 	public void getHomePage(Model model, String message, @AuthenticationPrincipal UserDetailsImpl userDetails) {
-		model.addAttribute("contents", "login/home :: home_contents");
+		model.addAttribute("contents", "home :: home_contents");
 		model.addAttribute("message", message + "が完了しました!");
 		getNowLoginUser(userDetails, model);
 	}

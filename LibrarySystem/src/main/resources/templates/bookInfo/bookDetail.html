@@ -9,7 +9,7 @@
         <div class="row">
             <div class="col-sm-5">
                 <div class="page-header">
-                    <h1>ユーザー詳細</h1>
+                    <h1 th:text="'『' + ${bookRegistForm.bookName} + '』 詳細'"></h1>
                 </div>
                 <form method="post" th:action="@{/bookDetail}" th:object="${bookRegistForm}">
                     <table class="table table-bordered table-hover">
